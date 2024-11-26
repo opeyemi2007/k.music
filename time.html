@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clock and Calendar</title>
+  <link rel="stylesheet" href="./CSS/time.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="clock-calendar">
+        <nav class="navbar">
+            <ul>
+              <li><a href="index.html">🏠︎</a></li>
+              <li><a href="">🌏</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="clock-container">
+            <div class="analog-clock">
+              <div class="hand hour"></div>
+              <div class="hand minute"></div>
+              <div class="hand second"></div>
+            </div>
+            <div id="clock"></div>
+            <div class="date-container">
+                <div id="date"></div>
+            </div>
+          </div>
+          
+
+     
+
+
+    </div>
+  </div>
+    
+</body>
+</html>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+  const clockElement = document.getElementById("clock");
+  const dateElement = document.getElementById("date");
+
+  // Update the clock and date every second
+  function updateClockAndDate() {
+    const now = new Date();
+
+    // Format time as HH:MM:SS
+    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+    // Format date as Day, Month Date, Year (e.g., Sunday, January 1, 2024)
+    const date = now.toLocaleDateString([], {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+
+    // Update the DOM elements
+    clockElement.textContent = time;
+    dateElement.textContent = date;
+  }
+
+  // Initial call and start interval
+  updateClockAndDate();
+  setInterval(updateClockAndDate, 1000);
+});
+
+
+function updateClock() {
+  const now = new Date();
+  
+  // Analog clock
+  const secondHand = document.querySelector(".hand.second");
+  const minuteHand = document.querySelector(".hand.minute");
+  const hourHand = document.querySelector(".hand.hour");
+
+  const seconds = now.getSeconds();
+  const minutes = now.getMinutes();
+  const hours = now.getHours();
+
+  secondHand.style.transform = `rotate(${seconds * 6}deg)`;
+  minuteHand.style.transform = `rotate(${minutes * 6 + seconds / 10}deg)`;
+  hourHand.style.transform = `rotate(${hours * 30 + minutes / 2}deg)`;
+
+  // Date display
+  const dateDisplay = document.getElementById("date-display");
+  dateDisplay.textContent = now.toDateString();
+}
+
+// Update every second
+setInterval(updateClock, 1000);
+updateClock();
+
+
+
+</script>
